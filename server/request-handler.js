@@ -11,6 +11,8 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+var data = [
+];
 var storage = require('./data');
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -70,18 +72,6 @@ var requestHandler = function(request, response) {
   
   // response.end('Hello World!');
 
-
-
-  var data = [
-    {
-      objectId: 1,
-      roomname: 'lobby',
-      username: 'saloni',
-      text: 'hello all',
-      createdAt: new Date()
-    }
-  ];
-
   var postData;
   request.setEncoding('utf8');
   request.on('error', function(err) {
@@ -114,7 +104,7 @@ var requestHandler = function(request, response) {
       response.statusCode = 404;
       request = undefined;
     }
-    
+     
     var defaultCorsHeaders = {
       'access-control-allow-origin': '*',
       'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -128,10 +118,7 @@ var requestHandler = function(request, response) {
       url: url,
       results: results 
     };
-    response.on('error', function(err) {
-      console.error(err);
-    });
-    response.setHeader('Content-Type', 'application/json');
+    //response.setHeader('Content-Type', 'application/json');
     response.end(JSON.stringify(responseBody));
   });
 
@@ -153,4 +140,4 @@ var requestHandler = function(request, response) {
 // Another way to get around this restriction is to serve you chat
 // client from this domain by setting up static file serving.
 
-module.exports = requestHandler;
+module.exports = {requestHandler: requestHandler};
